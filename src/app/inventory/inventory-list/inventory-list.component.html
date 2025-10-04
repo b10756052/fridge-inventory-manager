@@ -1,0 +1,58 @@
+<div class="inventory-list-controls">
+  <label for="category-filter">篩選類別：</label>
+  <select
+    id="category-filter"
+    [ngModel]="selectedCategorySubject.value"
+    (ngModelChange)="onCategoryChange($event)"
+  >
+    <option *ngFor="let cat of categories" [value]="cat">{{ cat }}</option>
+  </select>
+
+  <div class="sort-controls">
+    <button
+      (click)="onSortChange('expiryDate')"
+      [class.active]="sortKeySubject.value === 'expiryDate'"
+    >
+      按過期日排序
+    </button>
+    <button
+      (click)="onSortChange('addedDate')"
+      [class.active]="sortKeySubject.value === 'addedDate'"
+    >
+      按新增日排序
+    </button>
+  </div>
+</div>
+
+<div
+  class="item-cards-container"
+  *ngIf="filteredAndSortedItems$ | async as items"
+>
+  <ng-container *ngIf="items.length > 0; else emptyList">
+    <div
+      class="item-card"
+      *ngFor="let item of items"
+      [class.warning]="item.isWarning"
+    >
+      <div class="card-header">
+        <h3>{{ item.name }}</h3>
+        <span class="category-tag">{{ item.category }}</span>
+      </div>
+      <p>數量：{{ item.quantity }} {{ item.unit }}</p>
+      <p class="expiry-date">
+        **過期日：{{ item.expiryDate }}**
+        <span *ngIf="item.isWarning" class="warning-text"> (即將/已過期!)</span>
+      </p>
+      <p class="added-date">新增日：{{ item.addedDate }}</p>
+
+      <div class="card-actions">
+        <button class="edit-btn" (click)="onEdit(item)">編輯</button>
+        <button class="delete-btn" (click)="onDelete(item.id)">刪除</button>
+      </div>
+    </div>
+  </ng-container>
+
+  <ng-template #emptyList>
+    <p class="empty-message">此 {{ location }} 區域目前沒有庫存項目。</p>
+  </ng-template>
+</div>

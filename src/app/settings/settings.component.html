@@ -1,0 +1,50 @@
+<div class="settings-container">
+  <div class="settings-header" (click)="toggleSettings()">
+    <h2>⚙️ 設定</h2>
+    <span class="toggle-icon">{{ isExpanded ? "▼" : "▶" }}</span>
+  </div>
+
+  <div class="settings-content" *ngIf="isExpanded">
+    <div class="setting-section">
+      <h3>過期提醒設定</h3>
+      <div class="form-group">
+        <label for="reminderDays">提前幾天提醒：</label>
+        <input
+          type="number"
+          id="reminderDays"
+          [(ngModel)]="settings.reminderDays"
+          (ngModelChange)="onReminderDaysChange()"
+          min="0"
+        />
+        <span class="unit">天</span>
+      </div>
+      <p class="hint">
+        系統將在物品過期前 {{ settings.reminderDays }} 天開始顯示警告。
+      </p>
+    </div>
+
+    <div class="setting-section">
+      <h3>自訂類別</h3>
+      <div class="categories-list">
+        <span
+          *ngFor="let category of settings.customCategories"
+          class="category-chip"
+        >
+          {{ category }}
+        </span>
+      </div>
+
+      <div class="add-category-form">
+        <input
+          type="text"
+          [(ngModel)]="newCategory"
+          placeholder="輸入新類別名稱"
+          (keyup.enter)="addCategory()"
+        />
+        <button (click)="addCategory()" [disabled]="!newCategory.trim()">
+          新增類別
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

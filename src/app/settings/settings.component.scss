@@ -1,0 +1,141 @@
+.settings-container {
+  margin-top: 40px;
+  border: 1px solid var(--color-block);
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.settings-header {
+  background-color: var(--color-block);
+  padding: 15px 20px;
+  cursor: pointer;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  user-select: none;
+
+  h2 {
+    margin: 0;
+    color: #333;
+    font-size: 1.2em;
+  }
+
+  .toggle-icon {
+    font-size: 1.2em;
+    color: #666;
+  }
+
+  &:hover {
+    background-color: #9dd9ff;
+  }
+}
+
+.settings-content {
+  padding: 20px;
+  background-color: white;
+}
+
+.setting-section {
+  margin-bottom: 30px;
+
+  &:last-child {
+    margin-bottom: 0;
+  }
+
+  h3 {
+    margin-top: 0;
+    margin-bottom: 15px;
+    color: var(--color-primary);
+    font-size: 1.1em;
+  }
+}
+
+.form-group {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 10px;
+
+  label {
+    font-weight: bold;
+    color: #333;
+  }
+
+  input[type="number"] {
+    width: 80px;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 1em;
+
+    &:focus {
+      outline: none;
+      border-color: var(--color-primary);
+    }
+  }
+
+  .unit {
+    color: #666;
+  }
+}
+
+.hint {
+  color: #666;
+  font-size: 0.9em;
+  font-style: italic;
+  margin: 5px 0 0 0;
+}
+
+.categories-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-bottom: 15px;
+}
+
+.category-chip {
+  background-color: var(--color-accent);
+  color: #333;
+  padding: 5px 12px;
+  border-radius: 20px;
+  font-size: 0.9em;
+  font-weight: 500;
+}
+
+.add-category-form {
+  display: flex;
+  gap: 10px;
+
+  input[type="text"] {
+    flex: 1;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 1em;
+
+    &:focus {
+      outline: none;
+      border-color: var(--color-primary);
+    }
+  }
+
+  button {
+    padding: 10px 20px;
+    background-color: var(--color-primary);
+    color: white;
+    border: none;
+    border-radius: 5px;
+    font-size: 1em;
+    cursor: pointer;
+    white-space: nowrap;
+
+    &:hover:not(:disabled) {
+      background-color: #7ac4ff;
+    }
+
+    &:disabled {
+      background-color: #ddd;
+      cursor: not-allowed;
+    }
+  }
+}

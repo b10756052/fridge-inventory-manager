@@ -1,0 +1,107 @@
+<div class="modal-overlay" (click)="closeModal()">
+  <div class="modal-content" (click)="$event.stopPropagation()">
+    <div class="modal-header">
+      <h2>{{ itemToEdit ? "編輯物品" : "新增物品" }}</h2>
+      <button class="close-btn" (click)="closeModal()">&times;</button>
+    </div>
+
+    <form [formGroup]="itemForm" (ngSubmit)="onSubmit()">
+      <div class="form-group">
+        <label for="name">物品名稱 *</label>
+        <input
+          type="text"
+          id="name"
+          formControlName="name"
+          placeholder="例如：牛奶"
+        />
+        <div
+          *ngIf="itemForm.get('name')?.invalid && itemForm.get('name')?.touched"
+          class="error"
+        >
+          請輸入物品名稱
+        </div>
+      </div>
+
+      <div class="form-row">
+        <div class="form-group">
+          <label for="quantity">數量 *</label>
+          <input
+            type="number"
+            id="quantity"
+            formControlName="quantity"
+            step="0.01"
+            min="0.01"
+          />
+          <div
+            *ngIf="
+              itemForm.get('quantity')?.invalid &&
+              itemForm.get('quantity')?.touched
+            "
+            class="error"
+          >
+            請輸入有效數量
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="unit">單位 *</label>
+          <input
+            type="text"
+            id="unit"
+            formControlName="unit"
+            placeholder="例如：瓶、包、公克"
+          />
+          <div
+            *ngIf="
+              itemForm.get('unit')?.invalid && itemForm.get('unit')?.touched
+            "
+            class="error"
+          >
+            請輸入單位
+          </div>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="category">類別 *</label>
+        <select id="category" formControlName="category">
+          <option *ngFor="let cat of categories" [value]="cat">
+            {{ cat }}
+          </option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label for="storageLocation">存放區 *</label>
+        <select id="storageLocation" formControlName="storageLocation">
+          <option value="COLD">冷藏 (COLD)</option>
+          <option value="FROZEN">冷凍 (FROZEN)</option>
+          <option value="AMBIENT">常溫 (AMBIENT)</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label for="expiryDate">過期日期 *</label>
+        <input type="date" id="expiryDate" formControlName="expiryDate" />
+        <div
+          *ngIf="
+            itemForm.get('expiryDate')?.invalid &&
+            itemForm.get('expiryDate')?.touched
+          "
+          class="error"
+        >
+          請選擇過期日期
+        </div>
+      </div>
+
+      <div class="form-actions">
+        <button type="button" class="cancel-btn" (click)="closeModal()">
+          取消
+        </button>
+        <button type="submit" class="submit-btn" [disabled]="itemForm.invalid">
+          {{ itemToEdit ? "儲存" : "新增" }}
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

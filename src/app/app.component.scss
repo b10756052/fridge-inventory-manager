@@ -1,0 +1,68 @@
+/* 主容器樣式 */
+.app-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-bottom: 20px;
+  margin-bottom: 20px;
+  border-bottom: 1px solid var(--color-block);
+
+  h1 {
+    color: var(--color-primary);
+    margin: 0;
+  }
+}
+
+.add-item-btn {
+  background-color: var(--color-accent);
+  color: #333;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  font-size: 1em;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+
+  &:hover {
+    background-color: #b0efe9;
+  }
+}
+
+.location-tabs {
+  display: flex;
+  margin-bottom: 20px;
+  border-bottom: 2px solid var(--color-block);
+
+  button {
+    flex-grow: 1;
+    padding: 10px 15px;
+    border: none;
+    background: none;
+    cursor: pointer;
+    font-size: 16px;
+    color: #555;
+    border-bottom: 3px solid transparent;
+    transition: all 0.3s ease;
+
+    &:hover {
+      background-color: rgba(149, 212, 255, 0.1);
+    }
+
+    &.active {
+      color: var(--color-primary);
+      border-bottom: 3px solid var(--color-primary);
+      font-weight: bold;
+    }
+  }
+}
+
+.inventory-display {
+  margin-bottom: 30px;
+}

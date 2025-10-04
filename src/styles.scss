@@ -1,1 +1,41 @@
-/* You can add global styles to this file, and also import other style files */
+/* 定義 UI 顏色變數 */
+:root {
+  --color-background: #fffdee;
+  --color-block: #abe4ff;
+  --color-primary: #95d4ff;
+  --color-accent: #c9fff9;
+  --color-warning: #ffcccc;
+}
+
+/* 全域基礎樣式 */
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  background-color: var(--color-background);
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+    "Helvetica Neue", Arial, sans-serif;
+  color: #333;
+}
+
+/* 全域滾動條樣式 */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--color-primary);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #7ac4ff;
+}

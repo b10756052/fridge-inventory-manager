@@ -1,0 +1,102 @@
+.inventory-list-controls {
+  display: flex;
+  gap: 20px;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+select {
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.sort-controls button {
+  padding: 8px 15px;
+  margin-right: 10px;
+  border: 1px solid var(--color-primary);
+  border-radius: 5px;
+  background-color: transparent;
+  cursor: pointer;
+
+  &.active {
+    background-color: var(--color-primary);
+    color: white;
+  }
+}
+
+.item-cards-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 20px;
+}
+
+.item-card {
+  padding: 15px;
+  border-radius: 8px;
+  background-color: var(--color-block);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  border-left: 5px solid var(--color-primary);
+
+  &.warning {
+    background-color: var(--color-warning);
+    border-left: 5px solid #cc0000;
+  }
+
+  .card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+  }
+
+  h3 {
+    margin: 0;
+    font-size: 1.2em;
+  }
+
+  .category-tag {
+    background-color: var(--color-accent);
+    padding: 3px 8px;
+    border-radius: 4px;
+    font-size: 0.8em;
+  }
+
+  .expiry-date {
+    font-weight: bold;
+    .warning-text {
+      color: #cc0000;
+    }
+  }
+
+  .card-actions {
+    display: flex;
+    gap: 10px;
+    margin-top: 15px;
+  }
+
+  .edit-btn {
+    background-color: var(--color-primary);
+    color: white;
+    border: none;
+    padding: 8px 15px;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+
+  .delete-btn {
+    background-color: #f44336; /* 刪除警示色 */
+    color: white;
+    border: none;
+    padding: 8px 15px;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+}
+
+.empty-message {
+  text-align: center;
+  color: #666;
+  padding: 40px;
+  font-size: 1.1em;
+}

@@ -1,17 +1,17 @@
 {
   "$schema": "./node_modules/@angular/service-worker/config/schema.json",
-  "index": "/index.html",
+  "index": "/fridge-inventory-manager/index.html",
   "assetGroups": [
     {
       "name": "app",
       "installMode": "prefetch",
       "resources": {
         "files": [
-          "/favicon.ico",
-          "/index.html",
-          "/manifest.webmanifest",
-          "/*.css",
-          "/*.js"
+          "/fridge-inventory-manager/favicon.ico",
+          "/fridge-inventory-manager/index.html",
+          "/fridge-inventory-manager/manifest.webmanifest",
+          "/fridge-inventory-manager/*.css",
+          "/fridge-inventory-manager/*.js"
         ]
       }
     },
@@ -21,8 +21,8 @@
       "updateMode": "prefetch",
       "resources": {
         "files": [
-          "/assets/**",
-          "/*.(svg|cur|jpg|jpeg|png|apng|webp|avif|gif|otf|ttf|woff|woff2)"
+          "/fridge-inventory-manager/assets/**",
+          "/fridge-inventory-manager/*.(svg|cur|jpg|jpeg|png|apng|webp|avif|gif|otf|ttf|woff|woff2)"
         ]
       }
     }

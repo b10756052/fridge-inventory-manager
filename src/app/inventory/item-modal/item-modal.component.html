@@ -7,7 +7,7 @@
 
     <form [formGroup]="itemForm" (ngSubmit)="onSubmit()">
       <div class="form-group">
-        <label for="name">物品名稱 *</label>
+        <label for="name" class="required">物品名稱</label>
         <input
           type="text"
           id="name"
@@ -24,7 +24,7 @@
 
       <div class="form-row">
         <div class="form-group">
-          <label for="quantity">數量 *</label>
+          <label for="quantity" class="required">數量</label>
           <input
             type="number"
             id="quantity"
@@ -44,7 +44,7 @@
         </div>
 
         <div class="form-group">
-          <label for="unit">單位 *</label>
+          <label for="unit" class="required">單位</label>
           <input
             type="text"
             id="unit"
@@ -63,7 +63,7 @@
       </div>
 
       <div class="form-group">
-        <label for="category">類別 *</label>
+        <label for="category" class="required">類別</label>
         <select id="category" formControlName="category">
           <option *ngFor="let cat of categories" [value]="cat">
             {{ cat }}
@@ -72,7 +72,7 @@
       </div>
 
       <div class="form-group">
-        <label for="storageLocation">存放區 *</label>
+        <label for="storageLocation" class="required">存放區</label>
         <select id="storageLocation" formControlName="storageLocation">
           <option value="COLD">冷藏 (COLD)</option>
           <option value="FROZEN">冷凍 (FROZEN)</option>
@@ -81,7 +81,7 @@
       </div>
 
       <div class="form-group">
-        <label for="expiryDate">過期日期 *</label>
+        <label for="expiryDate" class="required">過期日期</label>
         <input type="date" id="expiryDate" formControlName="expiryDate" />
         <div
           *ngIf="

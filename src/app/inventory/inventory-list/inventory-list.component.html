@@ -1,4 +1,19 @@
-<div class="inventory-list-controls">
+<!-- 收合按鈕 -->
+<div class="filter-toggle-container">
+  <button
+    class="filter-toggle-btn"
+    [class.expanded]="!isFilterCollapsed"
+    (click)="toggleFilterCollapse()"
+    [attr.aria-expanded]="!isFilterCollapsed"
+    aria-label="切換篩選與操作區域"
+  >
+    <span class="toggle-icon">{{ isFilterCollapsed ? "▼" : "▲" }}</span>
+    <span class="toggle-text">篩選與操作</span>
+  </button>
+</div>
+
+<!-- 可收合的篩選控制區 -->
+<div class="inventory-list-controls" [class.collapsed]="isFilterCollapsed">
   <label for="category-filter">篩選類別：</label>
   <select
     id="category-filter"
@@ -22,6 +37,56 @@
       按新增日排序
     </button>
   </div>
+
+  <!-- 批次操作整體容器 -->
+  <div class="batch-operations-wrapper">
+    <!-- 批次刪除控制區 -->
+    <div class="batch-controls">
+      <button
+        class="batch-mode-toggle"
+        [class.active]="batchDeleteMode"
+        (click)="toggleBatchDeleteMode()"
+      >
+        {{ batchDeleteMode ? "✓ 批次刪除" : "批次刪除" }}
+      </button>
+
+      <!-- 批次模式下的操作按鈕 -->
+      <ng-container
+        *ngIf="batchDeleteMode && (filteredAndSortedItems$ | async) as items"
+      >
+        <button class="select-all-btn" (click)="toggleSelectAll(items)">
+          {{ selectedItemIds.size === items.length ? "取消全選" : "全選" }}
+        </button>
+        <button
+          class="batch-delete-btn"
+          [disabled]="selectedItemIds.size === 0"
+          (click)="onBatchDelete()"
+        >
+          刪除 ({{ selectedItemIds.size }})
+        </button>
+      </ng-container>
+    </div>
+
+    <!-- 快速批次操作連結 -->
+    <div class="quick-actions-links">
+      <a
+        class="quick-action-link danger"
+        (click)="deleteAllExpiredItems()"
+        title="刪除所有已過期的項目"
+      >
+        刪除已過期
+      </a>
+      <span class="separator">|</span>
+      <a
+        class="quick-action-link"
+        (click)="deleteCurrentCategoryItems()"
+        [class.disabled]="selectedCategorySubject.value === 'ALL'"
+        title="刪除當前類別的所有項目"
+      >
+        刪除此類別
+      </a>
+    </div>
+  </div>
 </div>
 
 <div
@@ -29,30 +94,58 @@
   *ngIf="filteredAndSortedItems$ | async as items"
 >
   <ng-container *ngIf="items.length > 0; else emptyList">
-    <div
-      class="item-card"
-      *ngFor="let item of items"
-      [class.warning]="item.isWarning"
-    >
-      <div class="card-header">
-        <h3>{{ item.name }}</h3>
-        <span class="category-tag">{{ item.category }}</span>
-      </div>
-      <p>數量：{{ item.quantity }} {{ item.unit }}</p>
-      <p class="expiry-date">
-        **過期日：{{ item.expiryDate }}**
-        <span *ngIf="item.isWarning" class="warning-text"> (即將/已過期!)</span>
-      </p>
-      <p class="added-date">新增日：{{ item.addedDate }}</p>
+    <ng-container *ngFor="let item of items">
+      <div class="item-wrapper">
+        <!-- 批次模式勾選框 - 圓形，圓心在左上角 -->
+        <div class="batch-checkbox" *ngIf="batchDeleteMode">
+          <input
+            type="checkbox"
+            [checked]="isItemSelected(item.id)"
+            (change)="toggleItemSelection(item.id)"
+            [id]="'checkbox-' + item.id"
+          />
+          <label [for]="'checkbox-' + item.id"></label>
+        </div>
+        <div
+          class="item-card"
+          [class.warning]="item.isWarning"
+          [class.batch-mode]="batchDeleteMode"
+          [class.selected]="isItemSelected(item.id)"
+          (click)="batchDeleteMode && onCardClick(item.id)"
+        >
+          <div class="card-header">
+            <h3>{{ item.name }}</h3>
+            <div class="chips-container">
+              <span class="storage-location-badge">
+                <span class="location-icon">{{
+                  getLocationIcon(item.storageLocation)
+                }}</span>
+                <span class="location-text">{{
+                  getLocationLabel(item.storageLocation)
+                }}</span>
+              </span>
+              <span class="category-tag">{{ item.category }}</span>
+            </div>
+          </div>
+          <p>數量：{{ item.quantity }} {{ item.unit }}</p>
+          <p class="expiry-date">
+            **過期日：{{ item.expiryDate }}**
+            <span *ngIf="item.isWarning" class="warning-text">
+              (即將/已過期!)</span
+            >
+          </p>
+          <p class="added-date">新增日：{{ item.addedDate }}</p>
 
-      <div class="card-actions">
-        <button class="edit-btn" (click)="onEdit(item)">編輯</button>
-        <button class="delete-btn" (click)="onDelete(item.id)">刪除</button>
+          <div class="card-actions" *ngIf="!batchDeleteMode">
+            <button class="edit-btn" (click)="onEdit(item)">編輯</button>
+            <button class="delete-btn" (click)="onDelete(item.id)">刪除</button>
+          </div>
+        </div>
       </div>
-    </div>
+    </ng-container>
   </ng-container>
 
   <ng-template #emptyList>
-    <p class="empty-message">此 {{ location }} 區域目前沒有庫存項目。</p>
+    <p class="empty-message">此類別目前沒有庫存唷</p>
   </ng-template>
 </div>

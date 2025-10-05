@@ -58,6 +58,11 @@
     margin-bottom: 5px;
     font-weight: bold;
     color: #333;
+
+    &.required::after {
+      content: " *";
+      color: red;
+    }
   }
 
   input,

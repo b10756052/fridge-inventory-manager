@@ -1,8 +1,9 @@
-import { Component, Input, Output, EventEmitter, OnInit } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { InventoryService } from '../../core/services/inventory.service';
 import { InventoryItem, StorageLocation } from '../../shared/models/inventory-item.interface';
+
+import { CommonModule } from '@angular/common';
+import { InventoryService } from '../../core/services/inventory.service';
 
 @Component({
   selector: 'app-item-modal',
@@ -12,6 +13,7 @@ import { InventoryItem, StorageLocation } from '../../shared/models/inventory-it
 })
 export class ItemModalComponent implements OnInit {
   @Input() itemToEdit: InventoryItem | null = null;
+  @Input() currentLocation: StorageLocation = 'COLD';
   @Output() close = new EventEmitter<void>();
 
   itemForm!: FormGroup;
@@ -34,7 +36,7 @@ export class ItemModalComponent implements OnInit {
       quantity: [this.itemToEdit?.quantity || 1, [Validators.required, Validators.min(0.01)]],
       unit: [this.itemToEdit?.unit || '', [Validators.required]],
       category: [this.itemToEdit?.category || this.categories[0] || '', [Validators.required]],
-      storageLocation: [this.itemToEdit?.storageLocation || this.storageLocations[0], [Validators.required]]
+      storageLocation: [this.itemToEdit?.storageLocation || this.currentLocation, [Validators.required]]
     });
   }
 

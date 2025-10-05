@@ -1,20 +1,38 @@
 ﻿<div class="app-container">
-  <header>
-    <h1>{{ appName }}</h1>
-    <button class="add-item-btn" (click)="openModalForNewItem()">
-      + 新增物品
-    </button>
-  </header>
+  <!-- 固定的頭部和導航區域 -->
+  <div class="sticky-header-wrapper">
+    <header>
+      <div class="header-left">
+        <div class="logo-icon">🧊</div>
+        <h1>{{ appName }}</h1>
+      </div>
+      <div class="header-right">
+        <button
+          class="icon-btn settings-btn"
+          (click)="openSettings()"
+          title="設定"
+        >
+          <span class="icon">⚙️</span>
+        </button>
+        <button class="add-item-btn" (click)="openModalForNewItem()">
+          <span class="icon">+</span>
+          <span class="text">新增物品</span>
+        </button>
+      </div>
+    </header>
 
-  <nav class="location-tabs">
-    <button
-      *ngFor="let tab of storageLocations"
-      [class.active]="currentTab === tab.value"
-      (click)="currentTab = tab.value"
-    >
-      {{ tab.label }}
-    </button>
-  </nav>
+    <nav class="location-tabs">
+      <button
+        *ngFor="let tab of storageLocations"
+        [class.active]="currentTab === tab.value"
+        (click)="currentTab = tab.value"
+        class="tab-button"
+      >
+        <span class="tab-icon">{{ getLocationIcon(tab.value) }}</span>
+        <span class="tab-label">{{ tab.label }}</span>
+      </button>
+    </nav>
+  </div>
 
   <main class="inventory-display">
     <app-inventory-list
@@ -24,11 +42,22 @@
     ></app-inventory-list>
   </main>
 
-  <app-settings></app-settings>
-
   <app-item-modal
     *ngIf="isModalOpen"
     [itemToEdit]="itemToEdit"
+    [currentLocation]="currentTab"
     (close)="closeModal()"
   ></app-item-modal>
+
+  <app-settings *ngIf="isSettingsOpen" (close)="closeSettings()"></app-settings>
+
+  <!-- 回到頂部按鈕 -->
+  <button
+    *ngIf="showScrollToTop"
+    class="back-to-top"
+    (click)="scrollToTop()"
+    title="回到最上層"
+  >
+    <span class="icon">↑</span>
+  </button>
 </div>

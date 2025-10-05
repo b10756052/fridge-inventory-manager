@@ -1,49 +1,66 @@
-<div class="settings-container">
-  <div class="settings-header" (click)="toggleSettings()">
-    <h2>⚙️ 設定</h2>
-    <span class="toggle-icon">{{ isExpanded ? "▼" : "▶" }}</span>
-  </div>
-
-  <div class="settings-content" *ngIf="isExpanded">
-    <div class="setting-section">
-      <h3>過期提醒設定</h3>
-      <div class="form-group">
-        <label for="reminderDays">提前幾天提醒：</label>
-        <input
-          type="number"
-          id="reminderDays"
-          [(ngModel)]="settings.reminderDays"
-          (ngModelChange)="onReminderDaysChange()"
-          min="0"
-        />
-        <span class="unit">天</span>
+﻿<div class="modal-overlay" (click)="closeModal()">
+  <div class="modal-content settings-modal" (click)="$event.stopPropagation()">
+    <div class="modal-header">
+      <div class="header-title">
+        <span class="icon"></span>
+        <h2>設定</h2>
       </div>
-      <p class="hint">
-        系統將在物品過期前 {{ settings.reminderDays }} 天開始顯示警告。
-      </p>
+      <button class="close-btn" (click)="closeModal()">&times;</button>
     </div>
 
-    <div class="setting-section">
-      <h3>自訂類別</h3>
-      <div class="categories-list">
-        <span
-          *ngFor="let category of settings.customCategories"
-          class="category-chip"
-        >
-          {{ category }}
-        </span>
+    <div class="modal-body">
+      <div class="setting-section">
+        <h3>過期提醒</h3>
+        <p class="hint">設定過期前幾天開始提醒您</p>
+        <div class="form-group">
+          <label for="reminderDays">提醒天數：</label>
+          <input
+            type="number"
+            id="reminderDays"
+            [(ngModel)]="settings.reminderDays"
+            (ngModelChange)="onReminderDaysChange()"
+          />
+          <span class="unit">天</span>
+        </div>
       </div>
 
-      <div class="add-category-form">
-        <input
-          type="text"
-          [(ngModel)]="newCategory"
-          placeholder="輸入新類別名稱"
-          (keyup.enter)="addCategory()"
-        />
-        <button (click)="addCategory()" [disabled]="!newCategory.trim()">
-          新增類別
-        </button>
+      <div class="setting-section">
+        <h3>自訂類別</h3>
+        <p class="hint">新增您常用的物品類別</p>
+
+        <div class="categories-list">
+          <div
+            *ngFor="let category of settings.customCategories"
+            class="category-chip"
+          >
+            <span class="category-name">{{ category }}</span>
+            <button
+              type="button"
+              class="delete-category-btn"
+              (click)="deleteCategory(category)"
+              [disabled]="!canDeleteCategory(category)"
+            >
+              ×
+            </button>
+          </div>
+        </div>
+
+        <div class="add-category-form">
+          <input
+            type="text"
+            [(ngModel)]="newCategory"
+            (keyup.enter)="addCategory()"
+            placeholder="輸入新類別名稱..."
+          />
+          <button
+            type="button"
+            (click)="addCategory()"
+            [disabled]="!newCategory.trim()"
+            class="add-btn"
+          >
+            <span class="icon">+</span> 新增
+          </button>
+        </div>
       </div>
     </div>
   </div>

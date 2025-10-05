@@ -1,102 +1,708 @@
+// 收合按鈕容器
+.filter-toggle-container {
+  margin-bottom: 12px;
+  display: flex;
+  justify-content: center;
+}
+
+.filter-toggle-btn {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 20px;
+  // 收合時的低調樣式（預設）
+  background: white;
+  color: var(--color-primary);
+  border: 2px solid #e0e0e0;
+  border-radius: 25px;
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 0.95em;
+  transition: all 0.3s ease;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+
+  &:active {
+    transform: scale(0.98);
+  }
+
+  // 展開時的醒目樣式
+  &.expanded {
+    background: linear-gradient(
+      135deg,
+      var(--color-primary) 0%,
+      var(--color-accent) 100%
+    );
+    color: white;
+    border: none;
+    box-shadow: 0 2px 8px rgba(74, 144, 226, 0.3);
+
+    &:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(74, 144, 226, 0.4);
+      background: linear-gradient(
+        135deg,
+        var(--color-primary) 0%,
+        var(--color-accent) 100%
+      );
+    }
+
+    &:active {
+      transform: translateY(0);
+    }
+  }
+
+  .toggle-icon {
+    font-size: 0.9em;
+    transition: transform 0.3s ease;
+  }
+
+  .toggle-text {
+    font-size: 1em;
+  }
+}
+
+// 篩選控制區（可收合）
 .inventory-list-controls {
   display: flex;
   gap: 20px;
   align-items: center;
   margin-bottom: 20px;
+  flex-wrap: wrap;
+  max-height: 500px;
+  opacity: 1;
+  overflow: hidden;
+  transition: max-height 0.4s ease, opacity 0.3s ease, margin-bottom 0.4s ease;
+
+  &.collapsed {
+    max-height: 0;
+    opacity: 0;
+    margin-bottom: 0;
+    pointer-events: none;
+  }
+
+  label {
+    white-space: nowrap;
+  }
 }
 
 select {
+  min-width: 170px;
   padding: 8px;
   border: 1px solid #ccc;
   border-radius: 4px;
 }
 
-.sort-controls button {
-  padding: 8px 15px;
-  margin-right: 10px;
-  border: 1px solid var(--color-primary);
-  border-radius: 5px;
-  background-color: transparent;
-  cursor: pointer;
+.sort-controls {
+  display: flex;
+  gap: 10px;
 
-  &.active {
-    background-color: var(--color-primary);
+  button {
+    padding: 8px 15px;
+    border: 1px solid var(--color-primary);
+    border-radius: 5px;
+    background-color: transparent;
+    color: var(--color-primary);
+    cursor: pointer;
+    transition: all 0.3s ease;
+
+    &:hover {
+      background-color: rgba(74, 144, 226, 0.1);
+    }
+
+    &.active {
+      background-color: var(--color-primary);
+      color: white;
+    }
+  }
+}
+
+// 批次操作整體容器
+.batch-operations-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-left: auto; // 寬螢幕時靠右對齊
+}
+
+// 批次刪除控制區樣式
+.batch-controls {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  flex-wrap: wrap;
+
+  .batch-mode-toggle {
+    padding: 8px 15px;
+    border: 2px solid var(--color-primary);
+    border-radius: 8px;
+    background-color: white;
+    color: var(--color-primary);
+    cursor: pointer;
+    font-weight: 600;
+    transition: all 0.3s ease;
+
+    &:hover {
+      background-color: rgba(74, 144, 226, 0.1);
+    }
+
+    &.active {
+      background: linear-gradient(
+        135deg,
+        var(--color-primary) 0%,
+        var(--color-accent) 100%
+      );
+      color: white;
+      box-shadow: 0 2px 8px rgba(74, 144, 226, 0.3);
+    }
+  }
+
+  .select-all-btn {
+    padding: 8px 15px;
+    border: 1px solid var(--color-accent);
+    border-radius: 6px;
+    background-color: white;
+    color: var(--color-accent);
+    cursor: pointer;
+    font-weight: 500;
+    transition: all 0.3s ease;
+
+    &:hover {
+      background-color: var(--color-accent);
+      color: white;
+    }
+  }
+
+  .batch-delete-btn {
+    padding: 8px 15px;
+    border: none;
+    border-radius: 6px;
+    background: linear-gradient(135deg, #ef5350 0%, #e53935 100%);
     color: white;
+    cursor: pointer;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 6px rgba(244, 67, 54, 0.3);
+
+    &:hover:not(:disabled) {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(244, 67, 54, 0.4);
+    }
+
+    &:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+  }
+}
+
+// 快速操作連結樣式（低調文字連結）
+.quick-actions-links {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding-left: 10px;
+  margin-left: 8px;
+  border-left: 1px solid #ddd;
+  font-size: 0.9em;
+
+  .quick-action-link {
+    color: #666;
+    text-decoration: none;
+    cursor: pointer;
+    padding: 4px 8px;
+    border-radius: 4px;
+    transition: all 0.2s ease;
+    font-weight: 500;
+
+    &:hover:not(.disabled) {
+      color: var(--color-primary);
+      background-color: rgba(74, 144, 226, 0.1);
+      text-decoration: underline;
+    }
+
+    &.danger {
+      color: #d32f2f;
+
+      &:hover:not(.disabled) {
+        color: #c62828;
+        background-color: rgba(211, 47, 47, 0.1);
+      }
+    }
+
+    &.disabled {
+      opacity: 0.4;
+      cursor: not-allowed;
+      pointer-events: none;
+    }
+  }
+
+  .separator {
+    color: #ddd;
+    user-select: none;
   }
 }
 
 .item-cards-container {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(min(280px, 100%), 1fr));
   gap: 20px;
+
+  &:has(.empty-message) {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+}
+
+// wrapper 提供定位上下文，讓 checkbox 可以相對於它定位
+.item-wrapper {
+  position: relative; // 關鍵：成為定位上下文
+}
+
+// 批次勾選框樣式 - 圓形，圓心在卡片左上角
+.batch-checkbox {
+  position: absolute; // 絕對定位，相對於 item-wrapper
+  top: 0;
+  left: 4px;
+  width: 0;
+  height: 0;
+  z-index: 10;
+  pointer-events: none; // 讓容器不攔截點擊事件
+
+  input[type="checkbox"] {
+    display: none;
+
+    &:checked + label {
+      background: linear-gradient(
+        135deg,
+        var(--color-primary) 0%,
+        var(--color-accent) 100%
+      );
+      border-color: var(--color-primary);
+
+      &::after {
+        opacity: 1;
+        transform: translate(-50%, -50%) scale(1);
+      }
+    }
+  }
+
+  label {
+    display: block;
+    width: 28px;
+    height: 28px;
+    border: 3px solid #ccc;
+    border-radius: 50%; // 圓形
+    background-color: white;
+    cursor: pointer;
+    position: absolute;
+    top: 0;
+    left: 0;
+    transform: translate(-50%, -50%);
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+    pointer-events: auto; // 勾選框本身可點擊
+
+    &:hover {
+      border-color: var(--color-primary);
+      background-color: rgba(74, 144, 226, 0.1);
+      box-shadow: 0 3px 10px rgba(74, 144, 226, 0.5);
+      transform: translate(-50%, -50%) scale(1.1);
+    }
+
+    &::after {
+      content: "✓";
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%) scale(0);
+      color: white;
+      font-size: 16px;
+      font-weight: bold;
+      opacity: 0;
+      transition: all 0.2s ease;
+    }
+  }
 }
 
 .item-card {
-  padding: 15px;
-  border-radius: 8px;
-  background-color: var(--color-block);
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  border-left: 5px solid var(--color-primary);
+  padding: 20px;
+  border-radius: 12px;
+  background-color: var(--color-card-bg);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  border: 1px solid #e8e8e8;
+  border-left: 4px solid var(--color-primary);
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden; // 防止內容破版
+
+  &:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 6px 20px rgba(74, 144, 226, 0.15);
+  }
+
+  &::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 4px;
+    height: 100%;
+    background: linear-gradient(
+      180deg,
+      var(--color-primary) 0%,
+      var(--color-accent) 100%
+    );
+  }
+
+  // 批次模式樣式
+  &.batch-mode {
+    cursor: pointer;
+
+    &:hover {
+      background-color: rgba(74, 144, 226, 0.05);
+    }
+
+    &.selected {
+      background: linear-gradient(135deg, #e3f2fd 0%, #bbdefb 100%);
+      border-left-color: var(--color-accent);
+      box-shadow: 0 4px 12px rgba(74, 144, 226, 0.2);
+
+      &::before {
+        background: var(--color-accent);
+      }
+    }
+  }
 
   &.warning {
-    background-color: var(--color-warning);
-    border-left: 5px solid #cc0000;
+    background: linear-gradient(135deg, #fffbf0 0%, #fff8e1 100%);
+    border-left: 4px solid var(--color-warning-border);
+    box-shadow: 0 2px 12px rgba(255, 193, 7, 0.2);
+
+    &::before {
+      background: linear-gradient(
+        180deg,
+        var(--color-warning-border) 0%,
+        #ff9800 100%
+      );
+    }
   }
 
   .card-header {
     display: flex;
     justify-content: space-between;
-    align-items: center;
-    margin-bottom: 10px;
+    align-items: flex-start;
+    margin-bottom: 15px;
+    gap: 12px;
+    flex-wrap: wrap;
   }
 
   h3 {
     margin: 0;
-    font-size: 1.2em;
+    font-size: 1.3em;
+    color: var(--color-text-primary);
+    font-weight: 600;
+    flex: 1;
+    line-height: 1.3;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .chips-container {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+    flex-shrink: 0;
+    flex-wrap: wrap;
+  }
+
+  .storage-location-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: linear-gradient(135deg, #f5f5f5 0%, #e8e8e8 100%);
+    padding: 5px 10px;
+    border-radius: 12px;
+    font-size: 0.75em;
+    font-weight: 500;
+    color: #555;
+    border: 1px solid #ddd;
+    white-space: nowrap;
+
+    .location-icon {
+      font-size: 1.1em;
+      line-height: 1;
+    }
+
+    .location-text {
+      font-weight: 600;
+    }
   }
 
   .category-tag {
-    background-color: var(--color-accent);
-    padding: 3px 8px;
-    border-radius: 4px;
-    font-size: 0.8em;
+    background: linear-gradient(
+      135deg,
+      var(--color-accent) 0%,
+      var(--color-primary-light) 100%
+    );
+    color: white;
+    padding: 5px 12px;
+    border-radius: 16px;
+    font-size: 0.75em;
+    font-weight: 600;
+    white-space: nowrap;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+  }
+
+  p {
+    margin: 8px 0;
+    color: var(--color-text-secondary);
+    font-size: 0.95em;
   }
 
   .expiry-date {
-    font-weight: bold;
+    font-weight: 600;
+    color: var(--color-text-primary);
+
     .warning-text {
-      color: #cc0000;
+      color: #d32f2f;
+      font-weight: 700;
+      animation: pulse 1.5s ease-in-out infinite;
     }
+  }
+
+  .added-date {
+    font-size: 0.85em;
+    color: var(--color-text-secondary);
   }
 
   .card-actions {
     display: flex;
     gap: 10px;
-    margin-top: 15px;
+    margin-top: 18px;
+    padding-top: 15px;
+    border-top: 1px solid #f0f0f0;
   }
 
   .edit-btn {
-    background-color: var(--color-primary);
+    flex: 1;
+    background: linear-gradient(
+      135deg,
+      var(--color-primary) 0%,
+      var(--color-primary-light) 100%
+    );
     color: white;
     border: none;
-    padding: 8px 15px;
-    border-radius: 4px;
+    padding: 10px 16px;
+    border-radius: 8px;
     cursor: pointer;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 6px rgba(74, 144, 226, 0.3);
+
+    &:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(74, 144, 226, 0.4);
+    }
+
+    &:active {
+      transform: translateY(0);
+    }
   }
 
   .delete-btn {
-    background-color: #f44336; /* 刪除警示色 */
+    flex: 1;
+    background: linear-gradient(135deg, #ef5350 0%, #e53935 100%);
     color: white;
     border: none;
-    padding: 8px 15px;
-    border-radius: 4px;
+    padding: 10px 16px;
+    border-radius: 8px;
     cursor: pointer;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 6px rgba(244, 67, 54, 0.3);
+
+    &:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(244, 67, 54, 0.4);
+    }
+
+    &:active {
+      transform: translateY(0);
+    }
+  }
+}
+
+@keyframes pulse {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.6;
   }
 }
 
 .empty-message {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
   text-align: center;
-  color: #666;
-  padding: 40px;
+  color: var(--color-text-secondary);
+  padding: 60px 40px;
   font-size: 1.1em;
+
+  &::before {
+    content: "📦";
+    font-size: 4em;
+    opacity: 0.5;
+  }
+}
+
+/* 中等寬度響應式設計 */
+@media (max-width: 930px) {
+  // 批次操作整體容器撑滿寬度
+  .batch-operations-wrapper {
+    width: 100%;
+    margin-left: 0;
+  }
+
+  .quick-actions-links {
+    border-left: none;
+  }
+
+  // 批次控制區拉伸佔據大部分空間
+  .batch-controls {
+    flex: 1;
+    min-width: 0; // 允許縮小
+  }
+}
+
+/* 手機響應式設計 */
+@media (max-width: 600px) {
+  .filter-toggle-btn {
+    padding: 8px 16px;
+    font-size: 0.9em;
+    width: 100%;
+    justify-content: center;
+
+    .toggle-icon {
+      font-size: 0.85em;
+    }
+  }
+
+  .inventory-list-controls {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 12px;
+    margin-bottom: 15px;
+
+    label {
+      font-size: 0.9em;
+    }
+
+    select {
+      width: 100%;
+      padding: 10px;
+    }
+
+    .sort-controls {
+      display: flex;
+      gap: 8px;
+
+      button {
+        flex: 1;
+        padding: 10px 12px;
+        margin-right: 0;
+        font-size: 0.85em;
+      }
+    }
+  }
+
+  // 批次操作整體容器在小螢幕的樣式
+  .batch-operations-wrapper {
+    width: 100%;
+    margin-left: 0; // 移除靠右對齊
+    justify-content: flex-start; // 從左邊開始
+    gap: 10px;
+  }
+
+  // 批次控制區手機版樣式
+  .batch-controls {
+    width: 100%;
+    min-width: 0;
+    gap: 8px;
+    justify-content: stretch;
+
+    .batch-mode-toggle {
+      flex: 1;
+      font-size: 0.8em;
+      padding: 8px 8px;
+      min-width: 0;
+    }
+
+    .select-all-btn,
+    .batch-delete-btn {
+      flex: 1;
+      font-size: 0.8em;
+      padding: 8px 8px;
+      min-width: 0;
+      white-space: nowrap;
+    }
+  }
+
+  // 快速操作連結手機版
+  .quick-actions-links {
+    width: 100%;
+    margin-left: 0;
+    padding-left: 0;
+    padding-top: 8px;
+    font-size: 0.85em;
+    flex-shrink: 0;
+    border-left: none;
+    border-top: 1px solid #ddd;
+    justify-content: center;
+  }
+
+  .item-card {
+    padding: 16px 16px 12px 16px;
+
+    h3 {
+      font-size: 1.1em;
+    }
+
+    .category-tag {
+      font-size: 0.7em;
+      padding: 3px 10px;
+    }
+
+    p {
+      font-size: 0.9em;
+      margin: 6px 0;
+    }
+
+    .card-actions {
+      gap: 8px;
+      margin-top: 12px;
+      padding-top: 10px;
+
+      button {
+        padding: 9px 12px;
+        font-size: 0.9em;
+      }
+    }
+  }
+
+  .empty-message {
+    padding: 40px 20px;
+    font-size: 1em;
+
+    &::before {
+      font-size: 3em;
+    }
+  }
 }

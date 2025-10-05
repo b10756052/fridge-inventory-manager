@@ -1,4 +1,4 @@
-import { AppSettings, InventoryItem, StorageLocation } from '../../shared/models/inventory-item.interface';
+import { AppSettings, FontSize, InventoryItem, StorageLocation } from '../../shared/models/inventory-item.interface';
 import { BehaviorSubject, Observable } from 'rxjs';
 
 import { Injectable } from '@angular/core';
@@ -17,8 +17,9 @@ export class InventoryService {
   private inventorySubject = new BehaviorSubject<InventoryItem[]>([]);
   /** 設定 subject */
   private settingsSubject = new BehaviorSubject<AppSettings>({
-    reminderDays: 3,
-    customCategories: ['肉品', '蔬菜', '醬料', '乳製品']
+    reminderDays: 1,
+    customCategories: ['肉品', '蔬菜', '醬料', '乳製品'],
+    fontSize: 'system' // 預設跟隨系統設定
   });
 
   /** 清單 subject 訂閱 */
@@ -148,6 +149,17 @@ export class InventoryService {
   hasCategoryInventory(category: string): boolean {
     const currentItems = this.inventorySubject.value;
     return currentItems.some(item => item.category === category);
+  }
+
+  /** 更新字體大小設定 */
+  updateFontSize(fontSize: FontSize): void {
+    const currentSettings = this.settingsSubject.value;
+    const newSettings: AppSettings = {
+      ...currentSettings,
+      fontSize: fontSize
+    };
+    this.settingsSubject.next(newSettings);
+    this.saveSettings();
   }
 
   // #endregion

@@ -1,4 +1,4 @@
-/* 定義 UI 顏色變數 */
+/* 定義 UI 顏色變數與字體大小變數 */
 :root {
   --color-background: #f5f7fa;
   --color-block: #abe4ff;
@@ -12,11 +12,41 @@
   --color-card-bg: #ffffff;
   --color-text-primary: #2c3e50;
   --color-text-secondary: #6c757d;
+
+  /* 字體大小變數 - 使用 rem 單位以支援系統字體縮放 */
+  --font-size-xs: 0.75rem; /* 12px */
+  --font-size-sm: 0.875rem; /* 14px */
+  --font-size-base: 1rem; /* 16px */
+  --font-size-lg: 1.125rem; /* 18px */
+  --font-size-xl: 1.25rem; /* 20px */
+  --font-size-2xl: 1.5rem; /* 24px */
+  --font-size-3xl: 1.875rem; /* 30px */
 }
 
 /* 全域基礎樣式 */
 * {
   box-sizing: border-box;
+}
+
+/* 設定根元素基礎字體大小,預設 16px
+ * 當使用者在系統設定中調整字體大小時,這個值會自動改變
+ * 所有使用 rem 的元素都會相應縮放
+ */
+html {
+  font-size: 100%; /* 16px - 會根據使用者的瀏覽器/系統設定自動調整 */
+}
+
+/* 支援手動字體縮放 */
+html.font-small {
+  font-size: 87.5%; /* 14px */
+}
+
+html.font-large {
+  font-size: 112.5%; /* 18px */
+}
+
+html.font-xlarge {
+  font-size: 125%; /* 20px */
 }
 
 body {
@@ -26,6 +56,8 @@ body {
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
     "Helvetica Neue", Arial, sans-serif;
   color: #333;
+  font-size: var(--font-size-base); /* 使用 rem 單位 */
+  line-height: 1.5;
 }
 
 /* 全域滾動條樣式 */

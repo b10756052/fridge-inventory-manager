@@ -8,7 +8,7 @@
     "build:prod": "ng build --configuration production --base-href /fridge-inventory-manager/",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
-    "deploy": "ng deploy --base-href=/fridge-inventory-manager/"
+    "deploy": "npx angular-cli-ghpages --dir=dist/fridge-inventory-manager/browser"
   },
   "private": true,
   "dependencies": {

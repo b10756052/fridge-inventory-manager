@@ -15,9 +15,15 @@ export interface InventoryItem {
 }
 
 /**
+ * 字體大小選項
+ */
+export type FontSize = 'system' | 'small' | 'medium' | 'large' | 'xlarge';
+
+/**
  * 應用程式的全域設定模型
  */
 export interface AppSettings {
   reminderDays: number; // 過期前 N 天提醒
   customCategories: string[]; // 使用者自定義的類別清單
+  fontSize?: FontSize; // 字體大小設定 (預設: 'system' - 跟隨系統設定)
 }

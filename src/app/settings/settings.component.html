@@ -9,6 +9,31 @@
     </div>
 
     <div class="modal-body">
+      <!-- 字體大小設定區 -->
+      <div class="setting-section">
+        <h3>👓 字體大小</h3>
+        <p class="hint">調整字體大小 (我媽老花指定的功能XD</p>
+        <div class="font-size-selector">
+          <label
+            *ngFor="let option of fontSizeOptions"
+            class="font-option"
+            [class.selected]="settings.fontSize === option.value"
+          >
+            <input
+              type="radio"
+              name="fontSize"
+              [value]="option.value"
+              [(ngModel)]="settings.fontSize"
+              (ngModelChange)="onFontSizeChange()"
+            />
+            <div class="option-content">
+              <span class="option-label">{{ option.label }}</span>
+              <span class="option-description">{{ option.description }}</span>
+            </div>
+          </label>
+        </div>
+      </div>
+
       <div class="setting-section">
         <h3>過期提醒</h3>
         <p class="hint">設定過期前幾天開始提醒您</p>

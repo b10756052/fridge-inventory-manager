@@ -1,4 +1,4 @@
-import { Component, HostListener, OnInit } from '@angular/core';
+import { Component, HostListener, OnDestroy, OnInit } from '@angular/core';
 import { InventoryItem, StorageLocation } from './shared/models/inventory-item.interface';
 
 import { CommonModule } from '@angular/common';
@@ -6,6 +6,7 @@ import { InventoryListComponent } from './inventory/inventory-list/inventory-lis
 import { InventoryService } from './core/services/inventory.service';
 import { ItemModalComponent } from './inventory/item-modal/item-modal.component';
 import { SettingsComponent } from './settings/settings.component';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-root',
@@ -13,7 +14,7 @@ import { SettingsComponent } from './settings/settings.component';
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss'
 })
-export class AppComponent implements OnInit {
+export class AppComponent implements OnInit, OnDestroy {
   /** app title */
   appName = '冰箱管家!';
 
@@ -40,11 +41,59 @@ export class AppComponent implements OnInit {
   private deferredPrompt: any = null;
   private readonly INSTALL_PROMPT_DISMISSED_KEY = 'pwa-install-prompt-dismissed';
 
+  /** 訂閱管理 */
+  private settingsSubscription?: Subscription;
+
   constructor(private inventoryService: InventoryService) { }
 
   ngOnInit(): void {
     this.setupPWAInstallPrompt();
+    this.setupFontSizeListener();
   }
+
+  ngOnDestroy(): void {
+    // 清理訂閱
+    this.settingsSubscription?.unsubscribe();
+  }
+
+  // #region --- 字體大小設定 ---
+
+  /** 監聽字體大小設定變更 */
+  private setupFontSizeListener(): void {
+    this.settingsSubscription = this.inventoryService.settings$.subscribe(settings => {
+      this.applyFontSize(settings.fontSize || 'system');
+    });
+  }
+
+  /** 套用字體大小設定 */
+  private applyFontSize(fontSize: string): void {
+    const htmlElement = document.documentElement;
+
+    // 移除所有字體大小相關的 class
+    htmlElement.classList.remove('font-small', 'font-large', 'font-xlarge');
+
+    // 根據設定套用對應的 class
+    switch (fontSize) {
+      case 'small':
+        htmlElement.classList.add('font-small');
+        break;
+      case 'large':
+        htmlElement.classList.add('font-large');
+        break;
+      case 'xlarge':
+        htmlElement.classList.add('font-xlarge');
+        break;
+      case 'medium':
+        // 不加任何 class,使用預設大小
+        break;
+      case 'system':
+      default:
+        // 不加任何 class,讓瀏覽器使用系統設定
+        break;
+    }
+  }
+
+  // #endregion
 
   // #region --- PWA 安裝提示 ---
 

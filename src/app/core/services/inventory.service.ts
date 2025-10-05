@@ -19,7 +19,7 @@ export class InventoryService {
   private settingsSubject = new BehaviorSubject<AppSettings>({
     reminderDays: 1,
     customCategories: ['肉品', '蔬菜', '醬料', '乳製品'],
-    fontSize: 'system' // 預設跟隨系統設定
+    fontSize: 'medium' // 預設標準字體大小
   });
 
   /** 清單 subject 訂閱 */

@@ -19,7 +19,7 @@ export class SettingsComponent implements OnInit {
   settings: AppSettings = {
     reminderDays: 3,
     customCategories: [],
-    fontSize: 'system'
+    fontSize: 'medium'
   };
 
   /** 新增類別輸入框雙向綁定 */
@@ -27,7 +27,6 @@ export class SettingsComponent implements OnInit {
 
   /** 字體大小選項 */
   fontSizeOptions: { value: FontSize; label: string; description: string }[] = [
-    { value: 'system', label: '跟隨系統', description: '自動依照手機設定調整' },
     { value: 'small', label: '小', description: '適合眼睛好的使用者' },
     { value: 'medium', label: '標準', description: '預設字體大小' },
     { value: 'large', label: '大', description: '適合老花眼使用者' },

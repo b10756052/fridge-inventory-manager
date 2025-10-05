@@ -61,7 +61,7 @@ export class AppComponent implements OnInit, OnDestroy {
   /** 監聽字體大小設定變更 */
   private setupFontSizeListener(): void {
     this.settingsSubscription = this.inventoryService.settings$.subscribe(settings => {
-      this.applyFontSize(settings.fontSize || 'system');
+      this.applyFontSize(settings.fontSize || 'medium');
     });
   }
 
@@ -84,11 +84,8 @@ export class AppComponent implements OnInit, OnDestroy {
         htmlElement.classList.add('font-xlarge');
         break;
       case 'medium':
-        // 不加任何 class,使用預設大小
-        break;
-      case 'system':
       default:
-        // 不加任何 class,讓瀏覽器使用系統設定
+        // 不加任何 class,使用預設大小 (16px)
         break;
     }
   }

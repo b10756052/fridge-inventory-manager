@@ -1,0 +1,92 @@
+{
+  "configVersion": 1,
+  "timestamp": 1759632857344,
+  "index": "/fridge-inventory-manager/index.html",
+  "assetGroups": [
+    {
+      "name": "app",
+      "installMode": "prefetch",
+      "updateMode": "prefetch",
+      "cacheQueryOptions": {
+        "ignoreVary": true
+      },
+      "urls": [
+        "/fridge-inventory-manager/favicon.ico",
+        "/fridge-inventory-manager/index.html",
+        "/fridge-inventory-manager/main-XYW3QHUQ.js",
+        "/fridge-inventory-manager/manifest.webmanifest",
+        "/fridge-inventory-manager/polyfills-B6TNHZQ6.js",
+        "/fridge-inventory-manager/styles-5N3VNN5U.css"
+      ],
+      "patterns": []
+    },
+    {
+      "name": "assets",
+      "installMode": "lazy",
+      "updateMode": "prefetch",
+      "cacheQueryOptions": {
+        "ignoreVary": true
+      },
+      "urls": [
+        "/fridge-inventory-manager/assets/icons/icon-128x128.png",
+        "/fridge-inventory-manager/assets/icons/icon-144x144.png",
+        "/fridge-inventory-manager/assets/icons/icon-152x152.png",
+        "/fridge-inventory-manager/assets/icons/icon-192x192.png",
+        "/fridge-inventory-manager/assets/icons/icon-384x384.png",
+        "/fridge-inventory-manager/assets/icons/icon-512x512.png",
+        "/fridge-inventory-manager/assets/icons/icon-72x72.png",
+        "/fridge-inventory-manager/assets/icons/icon-96x96.png"
+      ],
+      "patterns": []
+    }
+  ],
+  "dataGroups": [
+    {
+      "name": "api-cache",
+      "patterns": [],
+      "strategy": "freshness",
+      "maxSize": 100,
+      "maxAge": 3600000,
+      "timeoutMs": 10000,
+      "cacheQueryOptions": {
+        "ignoreVary": true
+      },
+      "version": 1
+    }
+  ],
+  "hashTable": {
+    "/fridge-inventory-manager/assets/icons/icon-128x128.png": "f6c030fe1016f528034d15e7049258e25ddec4fc",
+    "/fridge-inventory-manager/assets/icons/icon-144x144.png": "0728531a51d8398ea77dcd78a77fea2c56b0b52f",
+    "/fridge-inventory-manager/assets/icons/icon-152x152.png": "e7062cbb4af02b4c23c9d8229c81e1137d53b900",
+    "/fridge-inventory-manager/assets/icons/icon-192x192.png": "f67c207fc2c500e53332817931c59efa36874948",
+    "/fridge-inventory-manager/assets/icons/icon-384x384.png": "6a93145e19eeb3b9525287a35090613e9ae00ab9",
+    "/fridge-inventory-manager/assets/icons/icon-512x512.png": "4dacc0d3a4bd044e7332ad0f81a5cbbdcc9d4d55",
+    "/fridge-inventory-manager/assets/icons/icon-72x72.png": "41ee533e131578d760c933da8b5e22ff89c4345a",
+    "/fridge-inventory-manager/assets/icons/icon-96x96.png": "51dd5fa0ad8ba9dc3d7dd0e9a56cb3b3da75e894",
+    "/fridge-inventory-manager/favicon.ico": "9c39f434fe1261f68c5e3eefdf734630d99c5670",
+    "/fridge-inventory-manager/index.html": "7c4968efa99ac831d98ed33b0ed5959f0d6aa3d0",
+    "/fridge-inventory-manager/main-XYW3QHUQ.js": "2f1683d7945e106ff711519059fcbfdd4d8e582b",
+    "/fridge-inventory-manager/manifest.webmanifest": "b58e013ae1206b0435e3e84ffcd4ac5d2f9a225b",
+    "/fridge-inventory-manager/polyfills-B6TNHZQ6.js": "bf76ac291d7f51c1139b7edcf86b359a30c08c64",
+    "/fridge-inventory-manager/styles-5N3VNN5U.css": "c9dbd843efce0ef0a98b124e208749766d481ec8"
+  },
+  "navigationUrls": [
+    {
+      "positive": true,
+      "regex": "^\\/.*$"
+    },
+    {
+      "positive": false,
+      "regex": "^\\/(?:.+\\/)?[^/]*\\.[^/]*$"
+    },
+    {
+      "positive": false,
+      "regex": "^\\/(?:.+\\/)?[^/]*__[^/]*$"
+    },
+    {
+      "positive": false,
+      "regex": "^\\/(?:.+\\/)?[^/]*__[^/]*\\/.*$"
+    }
+  ],
+  "navigationRequestStrategy": "performance"
+}

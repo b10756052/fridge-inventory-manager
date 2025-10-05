@@ -13,6 +13,145 @@
   }
 }
 
+/* PWA 安裝提示橫幅 */
+.install-prompt {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: linear-gradient(
+    135deg,
+    var(--color-block) 0%,
+    var(--color-accent) 100%
+  );
+  color: #2c5282;
+  padding: 12px 20px;
+  border-radius: 16px;
+  margin-bottom: 20px;
+  box-shadow: 0 4px 20px rgba(149, 212, 255, 0.3);
+  animation: slideDown 0.4s ease-out;
+  gap: 12px;
+
+  .install-prompt-content {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex: 1;
+    min-width: 0; // 防止文字溢出
+
+    .install-icon {
+      font-size: 1.5em;
+      flex-shrink: 0;
+    }
+
+    .install-text {
+      font-size: 0.95em;
+      font-weight: 600;
+      line-height: 1.4;
+      text-shadow: 1px 1px 2px rgba(255, 255, 255, 0.5);
+    }
+  }
+
+  .install-prompt-actions {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+    flex-shrink: 0;
+
+    .install-btn {
+      background: white;
+      color: var(--color-primary);
+      border: 2px solid var(--color-primary);
+      padding: 8px 16px;
+      border-radius: 10px;
+      font-weight: 700;
+      font-size: 0.9em;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      white-space: nowrap;
+      box-shadow: 0 2px 8px rgba(149, 212, 255, 0.2);
+
+      &:hover {
+        background: var(--color-primary);
+        color: white;
+        transform: translateY(-2px);
+        box-shadow: 0 4px 12px rgba(74, 144, 226, 0.4);
+      }
+
+      &:active {
+        transform: translateY(0);
+      }
+    }
+
+    .close-btn {
+      background: rgba(255, 255, 255, 0.7);
+      color: #2c5282;
+      border: 2px solid rgba(74, 144, 226, 0.3);
+      width: 32px;
+      height: 32px;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      font-size: 1.2em;
+      font-weight: bold;
+      flex-shrink: 0;
+      box-shadow: 0 2px 6px rgba(149, 212, 255, 0.2);
+
+      &:hover {
+        background: white;
+        border-color: var(--color-primary);
+        transform: scale(1.05);
+        box-shadow: 0 3px 10px rgba(74, 144, 226, 0.3);
+      }
+
+      &:active {
+        transform: scale(0.95);
+      }
+    }
+  }
+}
+
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* 手機響應式 */
+@media (max-width: 600px) {
+  .install-prompt {
+    padding: 10px 12px;
+    flex-wrap: wrap;
+
+    .install-prompt-content {
+      flex: 1 1 100%;
+      margin-bottom: 8px;
+
+      .install-text {
+        font-size: 0.85em;
+      }
+    }
+
+    .install-prompt-actions {
+      flex: 1 1 100%;
+      justify-content: flex-end;
+
+      .install-btn {
+        flex: 1;
+        padding: 8px 12px;
+        font-size: 0.85em;
+      }
+    }
+  }
+}
+
 /* 頭部樣式 */
 .app-container {
   max-width: 1400px;

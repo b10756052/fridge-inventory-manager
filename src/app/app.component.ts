@@ -35,9 +35,68 @@ export class AppComponent implements OnInit {
   /** 是否顯示回到頂部按鈕 */
   showScrollToTop: boolean = false;
 
+  /** PWA 安裝相關 */
+  showInstallPrompt: boolean = false;
+  private deferredPrompt: any = null;
+  private readonly INSTALL_PROMPT_DISMISSED_KEY = 'pwa-install-prompt-dismissed';
+
   constructor(private inventoryService: InventoryService) { }
 
-  ngOnInit(): void { }
+  ngOnInit(): void {
+    this.setupPWAInstallPrompt();
+  }
+
+  // #region --- PWA 安裝提示 ---
+
+  /** 設定 PWA 安裝提示 */
+  private setupPWAInstallPrompt(): void {
+    // 檢查用戶是否已經關閉過提醒
+    const isDismissed = localStorage.getItem(this.INSTALL_PROMPT_DISMISSED_KEY);
+    if (isDismissed) {
+      return;
+    }
+
+    // 監聽 beforeinstallprompt 事件
+    window.addEventListener('beforeinstallprompt', (e: any) => {
+      // 防止默認的安裝提示
+      e.preventDefault();
+      // 保存事件以便稍後使用
+      this.deferredPrompt = e;
+      // 顯示自定義安裝提示
+      this.showInstallPrompt = true;
+    });
+  }
+
+  /** 執行 PWA 安裝 */
+  installPWA(): void {
+    if (!this.deferredPrompt) {
+      return;
+    }
+
+    // 顯示安裝提示
+    this.deferredPrompt.prompt();
+
+    // 等待用戶回應
+    this.deferredPrompt.userChoice.then((choiceResult: any) => {
+      if (choiceResult.outcome === 'accepted') {
+        console.log('用戶接受安裝 PWA');
+      } else {
+        console.log('用戶拒絕安裝 PWA');
+      }
+      // 清除提示
+      this.deferredPrompt = null;
+      this.showInstallPrompt = false;
+    });
+  }
+
+  /** 關閉 PWA 安裝提示 */
+  dismissInstallPrompt(): void {
+    this.showInstallPrompt = false;
+    // 記錄用戶已關閉提醒，下次不再顯示
+    localStorage.setItem(this.INSTALL_PROMPT_DISMISSED_KEY, 'true');
+  }
+
+  // #endregion
 
   // #region --- Modal 互動方法 ---
 

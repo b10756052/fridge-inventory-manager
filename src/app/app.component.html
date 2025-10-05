@@ -1,4 +1,18 @@
 ﻿<div class="app-container">
+  <!-- PWA 安裝提示橫幅 -->
+  <div class="install-prompt" *ngIf="showInstallPrompt">
+    <div class="install-prompt-content">
+      <span class="install-icon">✨</span>
+      <span class="install-text">將冰箱管家加到主畫面，更方便使用唷</span>
+    </div>
+    <div class="install-prompt-actions">
+      <button class="install-btn" (click)="installPWA()">立即安裝</button>
+      <button class="close-btn" (click)="dismissInstallPrompt()" title="關閉">
+        ✕
+      </button>
+    </div>
+  </div>
+
   <!-- 固定的頭部和導航區域 -->
   <div class="sticky-header-wrapper">
     <header>

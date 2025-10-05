@@ -5,8 +5,8 @@
   "theme_color": "#4a90e2",
   "background_color": "#ffffff",
   "display": "standalone",
-  "scope": "/",
-  "start_url": "/",
+  "scope": "/fridge-inventory-manager/",
+  "start_url": "/fridge-inventory-manager/",
   "orientation": "portrait-primary",
   "icons": [
     {
